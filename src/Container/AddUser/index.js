@@ -102,7 +102,8 @@ class AddUser extends React.PureComponent {
 
   render() {
     return (
-    	<div>        
+    	<div>  
+      <h1>Add User Form</h1>      
         <Form
           ref='form'
           type={newUser}

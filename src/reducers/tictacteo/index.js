@@ -62,7 +62,10 @@ const ticTacToeApp = (state = initialState, action) => {
       return Object.assign({}, initialState);
 
     case 'SET_CONTESTANT':{
-      let contestants = ['nitu','anil'];
+     // console.log('here is set contestant',action.payload.data);
+      let  player1 = action.payload.data[0];
+      let  player2 = action.payload.data[1];
+      let contestants = [player1,player2];
 
       return Object.assign({}, state, { contestants });  
     }

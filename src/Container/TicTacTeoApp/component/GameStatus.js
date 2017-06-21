@@ -2,18 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import t from 'tcomb-form';
 
-const Users = t.enums.of('Audi Chrysler Ford Renault Peugeot');
+const users = t.enums.of(['Nitu','Anil','Jahnavi'],'users');
 
 const Form = t.form.Form;
 
 const Select = t.struct({
-  player: t.list(Users)
+  player: t.list(users)
 });
 
 const options = {
   fields: {
     player: {
-      factory: t.form.Select,
+      attrs:{        
+        placeholder:'Select Player',
+        onFocus: () => {
+            console.log('select player in focus');
+        },
+        onBlur: () => {
+          console.log('select player out focus');
+        },
+        className: 'basic_element'
+      },      
+      factory: t.form.Select
     }
   }
 };
@@ -23,11 +33,24 @@ const options = {
 class GameStatus extends React.PureComponent {
   constructor(props) {
     super(props)
+    this.state = {
+      contestantName: []
+    }
     this.onChange = this.onChange.bind(this);
+    this.onPress = this.onPress.bind(this);
+
   }
 
   onChange = (value) => {
-    console.log(value);
+   // console.log(value.player[0]);
+   let contestantName = [...this.state.contestantName , value.player[0]];  
+   this.setState({ contestantName });
+  }  
+
+  onPress = (event) => {  
+    event.preventDefault();  
+   // console.log('here inisde the click',this.state.contestantName);
+    this.props.onSetPlayers(this.state.contestantName);    
   }  
 
   render() {
@@ -40,10 +63,11 @@ class GameStatus extends React.PureComponent {
       <Form
           ref='form'
           type={Select}
+          options={options}
           onChange={this.onChange}
         />
-      <button className="btn btn-primary btn-block" onClick={this.props.onSetPlayers}>Set Players</button></div> : null}
-      <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4>
+      <button className="btn btn-primary btn-block" onClick={this.onPress} >Set Players</button></div> : <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4>}     
+
       {this.props.finish
         ? <button className="btn btn-primary btn-block" onClick={this.props.onNewGameClick}>
         
@@ -61,6 +85,7 @@ GameStatus.propTypes = {
   turn: PropTypes.oneOf([0, 1]).isRequired,
   finish: PropTypes.bool.isRequired,
   onNewGameClick: PropTypes.func.isRequired,
+  onSetPlayers: PropTypes.func.isRequired,
 };
 
 export default GameStatus;

@@ -1,4 +1,6 @@
+import types from '../action_types';
+
 export default () => dispatch =>
   dispatch({
-    type: 'CLEAR_BOARD',
+    type: types.CLEAR_BOARD,
   });

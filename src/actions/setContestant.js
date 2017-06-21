@@ -1,4 +1,6 @@
-export default () => dispatch =>
+import types from '../action_types';
+
+export default (data) => dispatch =>
   dispatch({
-    type: 'SET_CONTESTANT',
+    type: types.SET_CONTESTANT, payload: {data} 
   });

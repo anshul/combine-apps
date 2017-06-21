@@ -15,9 +15,9 @@ const App = () =>
   <Provider store={store}>
     <Router>
       <Container>
-        <div>
+        <div style = {{ display:"flex" }}>
           <Sidebar />
-        <Switch>
+        <Switch>flex-direction: row; 
           <Route path="/todo" exact component={TodoApp} />
           <Route path="/tictacteo" exact component={TicTacTeoApp} />
           <Route path="/addUser" exact component={AddUser} />

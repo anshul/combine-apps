@@ -1,5 +1,7 @@
+import types from '../action_types';
+
 export default pos => dispatch =>
   dispatch({
-    type: 'MARK_SQUARE',
+    type: types.MARK_SQUARE,
     pos,
   });

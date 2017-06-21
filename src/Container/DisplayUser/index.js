@@ -12,6 +12,7 @@ class DisplayUser extends React.PureComponent {
   render() {
     return (
       <div>
+      <h1>Users Info</h1>
        {this.props.Users.map((user,index)=>
 				<div key={index}>
 	                <p>User's Name is: {user.Name}</p>
