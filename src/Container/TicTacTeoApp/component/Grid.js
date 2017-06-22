@@ -17,14 +17,14 @@ class Grid extends PureComponent {
   }
 
   render() {
-    return (   
-       <s.parentDiv>
+    return (
+      <s.parentDiv>
         <s.div>
           <table>
             <tbody>{this.renderBoard()}</tbody>
           </table>
-        </s.div>  
-        </s.parentDiv>   
+        </s.div>
+      </s.parentDiv>
     );
   }
 }

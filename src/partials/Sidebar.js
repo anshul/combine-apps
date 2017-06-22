@@ -22,7 +22,7 @@ class Sidebar extends React.PureComponent {
 
   render() {
     return (
-      <div style={{  border: "1px solid black" , width: '300px', textAlign: 'left' }}>
+      <div style={{ border: '1px solid black', width: '300px', textAlign: 'left' }}>
         <p> {this.state.mins}:{this.state.secs < 10 ? `0${this.state.secs}` : this.state.secs}</p>
         <p>{this.props.title}</p>
         <ul>

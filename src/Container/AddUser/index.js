@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import t from 'tcomb-form';
 import s from './styles';
@@ -8,11 +8,9 @@ import { AddUsers as addUsers } from '../../actions';
 
 const Form = t.form.Form;
 
-const Age = t.refinement(t.Number, (n) => n >= 0);
+const Age = t.refinement(t.Number, n => n >= 0);
 
-Age.getValidationErrorMessage = (value, path, context) => {
-  return 'bad age';
-};
+Age.getValidationErrorMessage = (value, path, context) => 'bad age';
 
 const newUser = t.struct({
   playerName: t.String,
@@ -25,20 +23,20 @@ const options = {
     playerName: {},
     playerAge: {},
     playerCity: {},
-  }
-}
+  },
+};
 
 class AddUser extends React.PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     console.log('here');
     this.state = {
       value: {
         playerName: '',
         playerAge: '',
         playerCity: '',
-      }
-    }
+      },
+    };
     this.onChange = this.onChange.bind(this);
     this.handleAddUser = this.handleAddUser.bind(this);
   }
@@ -48,30 +46,30 @@ class AddUser extends React.PureComponent {
       value: {
         playerName: '',
         playerAge: '',
-        playerCity: ''
-      }
-    }
+        playerCity: '',
+      },
+    };
   }
 
-  onChange = (value) => {
+  onChange = value => {
     this.setState({
-      value
-    })
-  }  
+      value,
+    });
+  };
 
- handleAddUser = () => {
-    const value = this.refs.form.getValue();
+  handleAddUser = () => {
+    const value = this.form.getValue();
     // If the form is valid...
     if (value) {
       const data = {
         playerName: value.playerName,
         playerAge: value.playerAge,
         playerCity: value.playerCity,
-      }
+      };
 
       console.log(data);
 
-      console.log(this.props.Users);
+      // console.log(this.props.Users);
       this.props.addUsers(data);
       /*
       // Serialize and post the data
@@ -102,21 +100,27 @@ class AddUser extends React.PureComponent {
 
   render() {
     return (
-    	<div>  
-      <h1>Add User Form</h1>      
+      <s.div>
+        <h1>Add User Form</h1>
         <Form
-          ref='form'
+          ref={form => (this.form = form)}
           type={newUser}
           options={options}
           value={this.state.value}
           onChange={this.onChange}
         />
-        <input type="button" onClick={this.handleAddUser} value="Add User" />
-      </div>
+        <s.button onClick={this.handleAddUser}>Add User</s.button>
+      </s.div>
     );
   }
 }
 
-const selector = state => ({ Users: state.config.Users });
+AddUser.propTypes = {
+  // Users: PropTypes.shape({Users: PropTypes.arrayOf(PropTypes.string)}.isRequired,
+  addUsers: PropTypes.func.isRequired,
+};
+
+// const selector = state => ({ Users: state.config.Users });
+const selector = state => ({});
 
 export default connect(selector, { addUsers })(AddUser);

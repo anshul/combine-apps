@@ -5,7 +5,7 @@ const initialState = {
   finish: false,
   players: ['X', 'O'],
   turn: 0,
-  contestants:['',''],
+  contestants: ['', ''],
 };
 
 const markSquare = (board, pos, mark) => {
@@ -41,33 +41,32 @@ const ticTacToeApp = (state = initialState, action) => {
     case 'MARK_SQUARE': {
       const { x, y } = action.pos;
       const contestant = getContestant(state);
-        if(contestant == '') 
-        {
-           return state;
-        }
+      if (contestant == '') {
+        return state;
+      }
       if (state.board[x][y] === '') {
         const mark = getMark(state);
-        
+
         const board = markSquare(state.board, { x, y }, mark);
         const turn = takeTurn(state);
 
         const finish = checkGameStatus(board);
         console.log(finish);
 
-        return Object.assign({}, state, { board, turn, finish ,contestant });
+        return Object.assign({}, state, { board, turn, finish, contestant });
       }
       return state;
     }
     case 'CLEAR_BOARD':
       return Object.assign({}, initialState);
 
-    case 'SET_CONTESTANT':{
-     // console.log('here is set contestant',action.payload.data);
-      let  player1 = action.payload.data[0];
-      let  player2 = action.payload.data[1];
-      let contestants = [player1,player2];
+    case 'SET_CONTESTANT': {
+      // console.log('here is set contestant',action.payload.data);
+      const player1 = action.payload.data[0];
+      const player2 = action.payload.data[1];
+      const contestants = [player1, player2];
 
-      return Object.assign({}, state, { contestants });  
+      return Object.assign({}, state, { contestants });
     }
 
     default:

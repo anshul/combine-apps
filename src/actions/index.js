@@ -3,9 +3,4 @@ import clearBoard from './clearBoard';
 import markSquare from './markSquare';
 import setContestant from './setContestant';
 
-export { 
-	AddUsers,
-	clearBoard,
-	markSquare,
-	setContestant
- };
+export { AddUsers, clearBoard, markSquare, setContestant };
