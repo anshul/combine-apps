@@ -5,7 +5,6 @@ import GameStatus from './component/GameStatus';
 
 const PlayerInfo = props =>
   <GameStatus
-    users={props.Users}
     turn={props.turn}
     contestants={props.contestants}
     finish={props.finish}

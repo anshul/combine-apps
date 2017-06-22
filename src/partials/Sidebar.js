@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -43,6 +43,11 @@ class Sidebar extends React.PureComponent {
     );
   }
 }
+
+Sidebar.propTypes = {
+  // Users: PropTypes.shape({Users: PropTypes.arrayOf(PropTypes.string)}.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 const selector = state => ({ title: state.config.title });
 

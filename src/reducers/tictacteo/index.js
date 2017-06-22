@@ -41,7 +41,7 @@ const ticTacToeApp = (state = initialState, action) => {
     case 'MARK_SQUARE': {
       const { x, y } = action.pos;
       const contestant = getContestant(state);
-      if (contestant == '') {
+      if (contestant === '') {
         return state;
       }
       if (state.board[x][y] === '') {

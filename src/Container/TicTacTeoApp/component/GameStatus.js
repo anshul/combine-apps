@@ -57,7 +57,7 @@ class GameStatus extends React.PureComponent {
 
           {this.props.contestants[this.props.turn] === ''
             ? <div>
-                <Form ref="form" type={Select} options={options} onChange={this.onChange} />
+                <Form ref={form => (this.form = form)} type={Select} options={options} onChange={this.onChange} />
                 <button className="btn btn-primary btn-block" onClick={this.onPress}>Set Players</button>
               </div>
             : <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4>}
@@ -75,7 +75,7 @@ class GameStatus extends React.PureComponent {
 }
 
 GameStatus.propTypes = {
-  players: PropTypes.arrayOf(PropTypes.string).isRequired,
+  contestants: PropTypes.arrayOf(PropTypes.string).isRequired,
   turn: PropTypes.oneOf([0, 1]).isRequired,
   finish: PropTypes.bool.isRequired,
   onNewGameClick: PropTypes.func.isRequired,
