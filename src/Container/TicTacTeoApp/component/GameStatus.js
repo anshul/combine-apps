@@ -9,6 +9,7 @@ class GameStatus extends React.PureComponent {
     const options = props.playersData.map((user, index) => ({ value: user.Name, label: user.Name }));
     this.state = {
       value: [],
+      disabled: true,
       options,
     };
     this.onChange = this.onChange.bind(this);
@@ -16,8 +17,7 @@ class GameStatus extends React.PureComponent {
   }
 
   onChange = value => {
-    console.log(typeof value);
-    this.setState({ value });
+    this.setState({ value, disabled: value.length !== 2 });
     // console.log(this.state.value.length , this.bttn);
     // this.state.value.length >= 1 ? this.bttn.disabled = false : "";
   };
@@ -43,7 +43,12 @@ class GameStatus extends React.PureComponent {
                   multi
                 />
 
-                <button ref={btn => (this.bttn = btn)} className="btn btn-primary btn-block" onClick={this.onPress}>
+                <button
+                  ref={btn => (this.bttn = btn)}
+                  className="btn btn-primary btn-block"
+                  onClick={this.onPress}
+                  disabled={this.state.disabled}
+                >
                   Set Players
                 </button>
               </div>
