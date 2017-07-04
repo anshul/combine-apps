@@ -34,8 +34,13 @@ class DisplayUser extends React.PureComponent {
   }
 }
 DisplayUser.propTypes = {
-  Users: PropTypes.arrayOf(PropTypes.array).isRequired,
-  // addUsers: PropTypes.func.isRequired,
+  Users: PropTypes.arrayOf(
+    PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Age: PropTypes.number.isRequired,
+      City: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 const selector = state => ({ Users: state.config.Users });

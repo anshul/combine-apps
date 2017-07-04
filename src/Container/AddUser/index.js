@@ -28,19 +28,7 @@ class AddUser extends React.PureComponent {
     this.handleAddUser = this.handleAddUser.bind(this);
   }
 
-  /* componentWillUnmount() {
-    this.setState = {
-      value: {
-        playerName: '',
-        playerAge: '',
-        playerCity: '',
-      },
-    };
-  }*/
-
   componentDidMount() {
-    // run your api call and once you have new value and options..
-    // you can run your api call and update the state like this at any place - doesn't have to be componentDidMount
     const self = this;
     axios
       .get('http://ws.postcoder.com/pcw/PCW45-12345-12345-1234X/country?format=json')
@@ -94,9 +82,11 @@ class AddUser extends React.PureComponent {
       this.props.addUsers(data);
 
       this.setState({
-        playerName: '',
-        playerAge: '',
-        playerCity: '',
+        value: {
+          playerName: '',
+          playerAge: '',
+          playerCity: '',
+        },
       });
 
       /*
