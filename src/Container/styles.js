@@ -4,7 +4,7 @@ const styles = {};
 
 styles.Container = styled.div`
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   justify-content: space-between;
   font: bold 12px/20px arial;
   padding: 5px 8px;

@@ -34,7 +34,6 @@ class TodoTextInput extends PureComponent {
       <input
         type="text"
         placeholder={this.props.placeholder}
-        autoFocus="true"
         value={this.state.text}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
@@ -43,6 +42,11 @@ class TodoTextInput extends PureComponent {
     );
   }
 }
+
+TodoTextInput.defaultProps = {
+  text: '',
+  placeholder: '',
+};
 
 TodoTextInput.propTypes = {
   onSave: PropTypes.func.isRequired,

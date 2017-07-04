@@ -21,7 +21,9 @@ class Grid extends PureComponent {
       <s.parentDiv>
         <s.div>
           <table>
-            <tbody>{this.renderBoard()}</tbody>
+            <tbody>
+              {this.renderBoard()}
+            </tbody>
           </table>
         </s.div>
       </s.parentDiv>

@@ -12,7 +12,7 @@ const Todo = props =>
   </div>;
 
 Todo.propTypes = {
-  todos: PropTypes.array.isRequired,
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   addTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
   completeTodo: PropTypes.func.isRequired,

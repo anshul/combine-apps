@@ -6,18 +6,13 @@ class GameStatus extends React.PureComponent {
   constructor(props) {
     console.log(props);
     super(props);
+    const options = props.playersData.map((user, index) => ({ value: user.Name, label: user.Name }));
     this.state = {
       value: [],
-      options: [],
+      options,
     };
     this.onChange = this.onChange.bind(this);
     this.onPress = this.onPress.bind(this);
-  }
-
-  componentDidMount() {
-    let options = [];
-    this.props.playersData.map((user, index) => (options = [...options, { value: user.Name, label: user.Name }]));
-    this.setState({ options });
   }
 
   onChange = value => {
@@ -38,7 +33,6 @@ class GameStatus extends React.PureComponent {
     return (
       <div className="row game-status">
         <div className="col-md-6 col-md-offset-3">
-
           {this.props.contestants[this.props.turn] === '' && this.props.playersData.length > 0
             ? <div>
                 <Select
@@ -53,11 +47,15 @@ class GameStatus extends React.PureComponent {
                   Set Players
                 </button>
               </div>
-            : this.props.playersData.length > 0 ? <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4> : ''}
+            : this.props.playersData.length > 0
+              ? <h4>
+                  {this.props.contestants[this.props.turn]}
+                  {`'s Turn`}
+                </h4>
+              : ''}
 
           {this.props.finish
             ? <button className="btn btn-primary btn-block" onClick={this.props.onNewGameClick}>
-
                 New Game
               </button>
             : null}
