@@ -1,53 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import t from 'tcomb-form';
-
-const users = t.enums.of(['Nitu', 'Anil', 'Jahnavi'], 'users');
-
-const Form = t.form.Form;
-
-const Select = t.struct({
-  player: t.list(users),
-});
-
-const options = {
-  fields: {
-    player: {
-      attrs: {
-        placeholder: 'Select Player',
-        onFocus: () => {
-          console.log('select player in focus');
-        },
-        onBlur: () => {
-          console.log('select player out focus');
-        },
-        className: 'basic_element',
-      },
-      factory: t.form.Select,
-    },
-  },
-};
+import Select from 'react-select';
 
 class GameStatus extends React.PureComponent {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
-      contestantName: [],
+      value: [],
+      options: [],
     };
     this.onChange = this.onChange.bind(this);
     this.onPress = this.onPress.bind(this);
   }
 
+  componentDidMount() {
+    let options = [];
+    this.props.playersData.map((user, index) => (options = [...options, { value: user.Name, label: user.Name }]));
+    this.setState({ options });
+  }
+
   onChange = value => {
-    // console.log(value.player[0]);
-    const contestantName = [...this.state.contestantName, value.player[0]];
-    this.setState({ contestantName });
+    console.log(typeof value);
+    this.setState({ value });
+    // console.log(this.state.value.length , this.bttn);
+    // this.state.value.length >= 1 ? this.bttn.disabled = false : "";
   };
 
   onPress = event => {
+    console.log('here', event);
     event.preventDefault();
-    // console.log('here inisde the click',this.state.contestantName);
-    this.props.onSetPlayers(this.state.contestantName);
+    console.log('here inisde the click', this.state.value);
+    this.props.onSetPlayers(this.state.value);
   };
 
   render() {
@@ -55,12 +39,21 @@ class GameStatus extends React.PureComponent {
       <div className="row game-status">
         <div className="col-md-6 col-md-offset-3">
 
-          {this.props.contestants[this.props.turn] === ''
+          {this.props.contestants[this.props.turn] === '' && this.props.playersData.length > 0
             ? <div>
-                <Form ref={form => (this.form = form)} type={Select} options={options} onChange={this.onChange} />
-                <button className="btn btn-primary btn-block" onClick={this.onPress}>Set Players</button>
+                <Select
+                  value={this.state.value}
+                  name="chooseContestant"
+                  options={this.state.options}
+                  onChange={this.onChange}
+                  multi
+                />
+
+                <button ref={btn => (this.bttn = btn)} className="btn btn-primary btn-block" onClick={this.onPress}>
+                  Set Players
+                </button>
               </div>
-            : <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4>}
+            : this.props.playersData.length > 0 ? <h4>{this.props.contestants[this.props.turn]}{`'s Turn`}</h4> : ''}
 
           {this.props.finish
             ? <button className="btn btn-primary btn-block" onClick={this.props.onNewGameClick}>
@@ -76,6 +69,7 @@ class GameStatus extends React.PureComponent {
 
 GameStatus.propTypes = {
   contestants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playersData: PropTypes.arrayOf(PropTypes.object).isRequired,
   turn: PropTypes.oneOf([0, 1]).isRequired,
   finish: PropTypes.bool.isRequired,
   onNewGameClick: PropTypes.func.isRequired,

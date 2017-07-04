@@ -15,16 +15,15 @@ const TicTacTeo = props =>
       turn={props.tictacteo.turn}
       contestants={props.tictacteo.contestants}
       finish={props.tictacteo.finish}
-      players={props.tictacteo.players}
       onNewGameClick={props.clearBoard}
       onSetPlayers={props.setContestant}
+      playersData={props.Users}
     />
     <Board board={props.tictacteo.board} onSquareClick={props.markSquare} />
   </div>;
 
 TicTacTeo.propTypes = {
   tictacteo: PropTypes.shape({
-    players: PropTypes.arrayOf(PropTypes.string),
     contestants: PropTypes.arrayOf(PropTypes.string),
     board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     onSquareClick: PropTypes.func,
@@ -33,11 +32,12 @@ TicTacTeo.propTypes = {
     onNewGameClick: PropTypes.func,
     onSetPlayers: PropTypes.func,
   }).isRequired,
+  Users: PropTypes.arrayOf(PropTypes.string).isRequired,
   markSquare: PropTypes.func.isRequired,
   clearBoard: PropTypes.func.isRequired,
   setContestant: PropTypes.func.isRequired,
 };
 
-const selector = state => ({ tictacteo: state.tictacteo });
+const selector = state => ({ tictacteo: state.tictacteo, Users: state.config.Users });
 
 export default connect(selector, { markSquare, clearBoard, setContestant })(TicTacTeo);

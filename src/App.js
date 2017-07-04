@@ -18,7 +18,6 @@ const App = () =>
         <div style={{ display: 'flex' }}>
           <Sidebar />
           <Switch>
-            flex-direction: row;
             <Route path="/todo" exact component={TodoApp} />
             <Route path="/tictacteo" exact component={TicTacTeoApp} />
             <Route path="/addUser" exact component={AddUser} />

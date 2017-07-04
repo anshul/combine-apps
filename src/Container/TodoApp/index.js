@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import s from './styles';
+import { connect } from 'react-redux';
+import Header from './component/Header';
+import MainSection from './component/MainSection';
+import { addTodo, deleteTodo, completeTodo } from '../../actions';
 
-const Container = props =>
-  <s.Container>
-    {props.children}
-  </s.Container>;
+const Todo = props =>
+  <div>
+    <Header addTodo={props.addTodo} />
+    <MainSection todos={props.todos} deleteTodo={props.deleteTodo} completeTodo={props.completeTodo} />
+  </div>;
 
-Container.propTypes = {
-  children: PropTypes.element.isRequired,
+Todo.propTypes = {
+  todos: PropTypes.array.isRequired,
+  addTodo: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
+  completeTodo: PropTypes.func.isRequired,
 };
 
-export default Container;
+const selector = state => ({ todos: state.todos });
+
+export default connect(selector, { addTodo, deleteTodo, completeTodo })(Todo);

@@ -13,4 +13,10 @@ styles.parentDiv = styled.div`
  padding: 14px;
 `;
 
+styles.td = styled.td`
+  font: bold 32px/48px arial;
+  color: #72727d;
+  text-align: center;
+`;
+
 export default styles;

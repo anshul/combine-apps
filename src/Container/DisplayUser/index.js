@@ -25,7 +25,7 @@ class DisplayUser extends React.PureComponent {
   }
 }
 DisplayUser.propTypes = {
-  Users: PropTypes.arrayOf(PropTypes.string).isRequired,
+  Users: PropTypes.arrayOf(PropTypes.array).isRequired,
   // addUsers: PropTypes.func.isRequired,
 };
 

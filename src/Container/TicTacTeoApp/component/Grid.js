@@ -8,9 +8,9 @@ class Grid extends PureComponent {
     return this.props.board.map((row, x) =>
       <tr key={x}>
         {row.map((square, y) =>
-          <td key={y} onClick={() => this.props.onSquareClick({ x, y })}>
+          <s.td key={y} onClick={() => this.props.onSquareClick({ x, y })}>
             {square}
-          </td>,
+          </s.td>,
         )}
       </tr>,
     );

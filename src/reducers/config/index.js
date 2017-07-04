@@ -7,7 +7,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.ADD_USER: {
-      console.log('here action', action.payload.data);
       const Users = [
         ...state.Users,
         {
@@ -16,7 +15,7 @@ export default function(state = initialState, action) {
           City: action.payload.data.playerCity,
         },
       ];
-
+      console.log('here action', Users);
       return Object.assign({}, state, { Users });
     }
 

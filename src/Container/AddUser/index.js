@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import t from 'tcomb-form';
 import s from './styles';
 
@@ -10,27 +11,13 @@ const Form = t.form.Form;
 
 const Age = t.refinement(t.Number, n => n >= 0);
 
-Age.getValidationErrorMessage = (value, path, context) => 'bad age';
-
-const newUser = t.struct({
-  playerName: t.String,
-  playerAge: Age,
-  playerCity: t.String,
-});
-
-const options = {
-  fields: {
-    playerName: {},
-    playerAge: {},
-    playerCity: {},
-  },
-};
+Age.getValidationErrorMessage = (value, path, context) => 'Please enter valid age';
 
 class AddUser extends React.PureComponent {
   constructor(props) {
     super(props);
-    console.log('here');
     this.state = {
+      pickerOptions: t.enums({}),
       value: {
         playerName: '',
         playerAge: '',
@@ -41,7 +28,7 @@ class AddUser extends React.PureComponent {
     this.handleAddUser = this.handleAddUser.bind(this);
   }
 
-  componentWillUnmount() {
+  /* componentWillUnmount() {
     this.setState = {
       value: {
         playerName: '',
@@ -49,6 +36,34 @@ class AddUser extends React.PureComponent {
         playerCity: '',
       },
     };
+  }*/
+
+  componentDidMount() {
+    // run your api call and once you have new value and options..
+    // you can run your api call and update the state like this at any place - doesn't have to be componentDidMount
+    const self = this;
+    axios
+      .get('http://ws.postcoder.com/pcw/PCW45-12345-12345-1234X/country?format=json')
+      .then(response => {
+        console.log(response.data);
+        // ex.: { user: 'Your User'}
+
+        let countriesList = [];
+
+        response.data.map((countries, index) => (countriesList = [...countriesList, countries.countryname]));
+
+        self.setState({
+          pickerOptions: t.enums.of(countriesList),
+          value: {
+            playerCity: countriesList,
+          },
+        });
+
+        // console.log(response.status);       // ex.: 200
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   onChange = value => {
@@ -56,6 +71,14 @@ class AddUser extends React.PureComponent {
       value,
     });
   };
+
+  getForm() {
+    return t.struct({
+      playerName: t.String,
+      playerAge: Age,
+      playerCity: this.state.pickerOptions,
+    });
+  }
 
   handleAddUser = () => {
     const value = this.form.getValue();
@@ -67,10 +90,15 @@ class AddUser extends React.PureComponent {
         playerCity: value.playerCity,
       };
 
-      console.log(data);
-
       // console.log(this.props.Users);
       this.props.addUsers(data);
+
+      this.setState({
+        playerName: '',
+        playerAge: '',
+        playerCity: '',
+      });
+
       /*
       // Serialize and post the data
       const json = JSON.stringify(data);
@@ -102,13 +130,7 @@ class AddUser extends React.PureComponent {
     return (
       <s.div>
         <h1>Add User Form</h1>
-        <Form
-          ref={form => (this.form = form)}
-          type={newUser}
-          options={options}
-          value={this.state.value}
-          onChange={this.onChange}
-        />
+        <Form ref={form => (this.form = form)} value={this.state.value} onChange={this.onChange} type={this.getForm()} />
         <s.button onClick={this.handleAddUser}>Add User</s.button>
       </s.div>
     );
